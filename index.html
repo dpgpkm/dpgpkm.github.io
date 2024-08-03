@@ -40,12 +40,32 @@
             </div>
         </mdui-tab-panel>
         <mdui-tab-panel slot="panel" value="manage-keys">
-            <h1>WIP</h1>
+            <div style="padding: 4px;">
+                <mdui-button full-width class="generate-key-button" onclick="openGenerateDialog()">Generate Key (WIP)</mdui-button>
+            </div>
           </mdui-tab-panel>
           <mdui-tab-panel slot="panel" value="cryption">
             <h1>WIP</h1>
           </mdui-tab-panel>
-      </mdui-tabs>    
+      </mdui-tabs>
+      <mdui-dialog class="generate-key-dialog" close-on-esc close-on-overlay-click headline="Generate new PGP key">
+        <mdui-select value="unchosen" class="generate-option-algo">
+            <mdui-menu-item value="unchosen" class="generate-choice-unchosen" disabled>Choose an algo</mdui-menu-item>
+            <mdui-menu-item value="rsa-4096">RSA 4096</mdui-menu-item>
+            <mdui-menu-item value="rsa-2048">RSA 2048</mdui-menu-item>
+            <mdui-menu-item value="ecc-curve25519">ECC curve25519</mdui-menu-item>
+            <mdui-menu-item value="ecc-ed25519">ECC ed25519</mdui-menu-item>
+          </mdui-select><br><br>
+          <mdui-text-field label="Username (optional)" class="generate-option-username"></mdui-text-field><br><br>
+          <mdui-text-field label="E-mail (optional)" class="generate-option-email"></mdui-text-field><br><br>
+          <mdui-text-field label="Passphrase (optional)" class="generate-option-passphrase" type="password" oninput="if(this.value){document.querySelector('.generate-option-confirm-passphrase').style.display='block'}else{document.querySelector('.generate-option-confirm-passphrase').style.display='none'}"></mdui-text-field><br><br>
+          <mdui-text-field label="Confirm Passphrase" class="generate-option-confirm-passphrase" type="password" style="display: none;"></mdui-text-field>
+          <center>
+            <span class="generate-errors" style="color: red;"></span>
+            <br><br>
+            <mdui-button class="generate-button" onclick="generateKey()">Create key</mdui-button>
+        </center>
+      </mdui-dialog>
     <script>mdui.setColorScheme("#39c5bb")</script>
     <script src="/js/index.js"></script>
   </body>

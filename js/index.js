@@ -4,10 +4,45 @@ window.mobileCheck = function() {
     return check;
   };
 
+function openGenerateDialog(){
+    mdui.$(".generate-choice-unchosen")[0].removeAttribute("disabled");
+    mdui.$(".generate-option-algo")[0].value='unchosen';
+    mdui.$(".generate-choice-unchosen")[0].setAttribute("disabled",""); //@TODO: fix bug
+    ['generate-option-username','generate-option-email','generate-option-passphrase','generate-option-confirm-passphrase'].forEach(element => {
+        mdui.$("."+element)[0].value=""
+    });
+    mdui.$(".generate-errors")[0].innerText="";
+    mdui.$(".generate-key-dialog")[0].open = true;
+}
 
+function validateGenerateForm(){
+    if(mdui.$(".generate-option-algo")[0].value == "unchosen"){
+        return "You must choose an algorithm."
+    };
+    if(mdui.$(".generate-option-email")[0].value !="" && !mdui.$(".generate-option-email")[0].value.includes("@")){ // That's all we needed
+        return "Invaild E-Mail address."
+    }
+    if( mdui.$(".generate-option-passphrase")[0].value != ""
+        && mdui.$(".generate-option-passphrase")[0].value != mdui.$(".generate-option-confirm-passphrase")[0].value ){
+        return "Passwords not match."
+    }
+    return null
+}
 
 document.querySelector("#javascript-loading-stats").setAttribute("description", "Ready")
 document.querySelector("#openpgp-loading-stats").setAttribute("description", `Ready, ${openpgp.config.versionString}`)
+document.querySelector('.generate-key-button').onclick = (e) => {
+    openGenerateDialog();
+}
+
+function generateKey(){
+    let error=validateGenerateForm();
+    if(error != null){
+        mdui.$('.generate-errors')[0].innerText = error
+    }else{
+        mdui.$('.generate-errors')[0].innerHTML = "You're good to go but that's WIP lol"
+    }
+}
 // if(mobileCheck()){
 //     document.querySelector("#choice-tab").setAttribute("placement", "bottom")
 // }
