@@ -1,5 +1,5 @@
 ﻿/**
- * EasyConfig.js v0.0.1
+ * EasyConfig.js v0.0.2
  * by cmd1152
  */
 
@@ -72,4 +72,5 @@ function deepMerge(target, source) {
       target[key] = source[key];
     }
   }
+  return target;
 }
