@@ -8,7 +8,7 @@ window.mobileCheck = function() {
 
 document.querySelector("#javascript-loading-stats").setAttribute("description", "Ready")
 document.querySelector("#openpgp-loading-stats").setAttribute("description", `Ready, ${openpgp.config.versionString}`)
-if(mobileCheck()){
-    document.querySelector("#choice-tab").setAttribute("placement", "bottom")
-}
+// if(mobileCheck()){
+//     document.querySelector("#choice-tab").setAttribute("placement", "bottom")
+// }
 console.warn("Warning: DO NOT PASTE ANYTHING HERE IF YOU DON'T KNOW WHAT IS THIS.")
