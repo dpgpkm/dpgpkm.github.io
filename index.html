@@ -1,11 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!doctype html>
+<html lang="zh-CN" class="mdui-theme-auto">
+  <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>WIP</h1>
-</body>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no"/>
+    <meta name="renderer" content="webkit"/>
+
+    <link rel="stylesheet" href="/css/mdui.css">
+    <script src="/js/lib/mdui.global.js"></script>
+    <script src="/js/lib/openpgp.min.js"></script>  
+    <link href="/css/material-icons.css" rel="stylesheet">
+
+    <title>DPGPkm</title>
+  </head>
+  <body>
+    <mdui-top-app-bar style="position: relative;">
+        <mdui-button-icon icon="menu"></mdui-button-icon>
+        <mdui-top-app-bar-title>DPGPkm</mdui-top-app-bar-title>
+        <div style="flex-grow: 1"></div>
+        <mdui-button-icon icon="more_vert"></mdui-button-icon>
+      </mdui-top-app-bar>
+      <mdui-tabs value="mainpage" full-width>
+        <mdui-tab value="mainpage" icon="home">Mainpage</mdui-tab>
+        <mdui-tab value="manage-keys" icon="keys">Manage Keys</mdui-tab>
+        <mdui-tab value="cryption" icon="lock">Encryption</mdui-tab>
+      
+        <mdui-tab-panel slot="panel" value="mainpage">
+            <br><br><br>
+            <div class="mdui-prose" style="max-width: 50%; padding-left: 25%;">
+                <center>
+                    <h1>DPGPkm Manager</h1>
+                </center>
+                <br><br>
+                <mdui-list>
+                    <center><mdui-list-item headline="Status"></mdui-list-item></center>
+                    <mdui-list-item headline="DPGPkm Manager Javascript" id="javascript-loading-stats" description="Not ready"></mdui-list-item>
+                    <mdui-list-item headline="OpenPGP.JS" id="openpgp-loading-stats" description="Not ready"></mdui-list-item>
+                    </mdui-list>
+            </div>
+        </mdui-tab-panel>
+        <mdui-tab-panel slot="panel" value="manage-keys">
+            <h1>WIP</h1>
+          </mdui-tab-panel>
+          <mdui-tab-panel slot="panel" value="cryption">
+            <h1>WIP</h1>
+          </mdui-tab-panel>
+      </mdui-tabs>    
+    <script>mdui.setColorScheme("#39c5bb")</script>
+    <script src="/js/index.js"></script>
+  </body>
 </html>
