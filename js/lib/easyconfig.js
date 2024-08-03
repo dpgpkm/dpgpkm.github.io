@@ -1,5 +1,5 @@
 ﻿/**
- * EasyConfig.js v0.0.2
+ * EasyConfig.js v0.0.3
  * by cmd1152
  */
 
@@ -38,7 +38,7 @@ window.easyconfig = (id, defData={}) => {
   };
 
   // 创建 Proxy 对象来包裹数据
-  const proxy = new Proxy(data || {}, handler);
+  const proxy = new Proxy(data || defData || {}, handler);
 
   return proxy;
 }
