@@ -1,5 +1,5 @@
 ﻿/**
- * EasyConfig.js v0.0.3
+ * EasyConfig.js v0.0.4
  * by cmd1152
  */
 
@@ -10,29 +10,29 @@
  * @param {object} defData - 可选（默认的数据）
  * @returns {proxy} - Proxy 对象（监听和自动保存数据）
  */
-window.easyconfig = (id, defData={}) => {
+window.easyconfig = (id, defData = {}) => {
   let data = localStorage.getItem(id);
   if (data) {
     try {
-      data = deepMerge(defData, JSON.parse(data));
+      data = deepMerge(defData, window.easyconfig_debug ? {} : JSON.parse(data));
     } catch (error) {
-      console.warn(`id为 ${id} 的数据可能已经损坏`, data);
+      console.warn(`Data with id ${id} is probably damaged.`, data);
       return defData;
     }
   }
 
   // Proxy 对象秒天下
   const handler = {
-    set: function(target, prop, value) {
+    set: function (target, prop, value) {
       // 用 obj.xxxx = xxx 的时候触发
       target[prop] = value;
-      localStorage.setItem(id, JSON.stringify(target));
+      if (!window.easyconfig_debug) localStorage.setItem(id, JSON.stringify(target));
       return true;
     },
-    deleteProperty: function(target, prop) {
+    deleteProperty: function (target, prop) {
       // 用 delete obj.xxxx 时触发
       delete target[prop];
-      localStorage.setItem(id, JSON.stringify(target));
+      if (!window.easyconfig_debug) localStorage.setItem(id, JSON.stringify(target));
       return true;
     }
   };
@@ -49,7 +49,7 @@ window.easyconfig = (id, defData={}) => {
  *
  * @param {Object} target - 合并的目标对象。
  * @param {Object} source - 包含要合并属性的源对象。
- * @returns {void} - 经过合并操作后的目标对象。
+ * @returns {Object} - 经过合并操作后的目标对象。
  *
  * @example
  * // 示例对象
