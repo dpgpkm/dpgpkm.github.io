@@ -5,14 +5,13 @@ window.mobileCheck = function () {
 };
 
 function openGenerateDialog() {
-    mdui.$(".generate-choice-unchosen")[0].removeAttribute("disabled");
-    mdui.$(".generate-option-algo")[0].value = 'unchosen';
-    mdui.$(".generate-choice-unchosen")[0].setAttribute("disabled", ""); //@TODO: fix bug
     ['generate-option-username', 'generate-option-email', 'generate-option-passphrase', 'generate-option-confirm-passphrase'].forEach(element => {
         mdui.$("." + element)[0].value = ""
+
     });
     mdui.$(".generate-errors")[0].innerText = "";
     mdui.$(".generate-key-dialog")[0].open = true;
+    mdui.$(".generate-option-algo")[0].value = 'unchosen';
 }
 
 function validateGenerateForm() {
