@@ -43,9 +43,18 @@
       </div>
     </mdui-tab-panel>
     <mdui-tab-panel slot="panel" value="manage-keys">
-      <div style="padding: 4px;">
-        <mdui-button full-width class="generate-key-button" onclick="openGenerateDialog()">Generate Key
-          (WIP)</mdui-button>
+      <div style=" margin-top: 8px; margin-right: 16px;">
+        <br>
+        <mdui-button-icon class="generate-key-button" style="float: right;" onclick="openGenerateDialog()"
+          variant="filled" icon="add"></mdui-button-icon>
+      </div>
+      <div class="mdui-prose" style="padding-top: 8px; padding-left: 8px;">
+        <h3>My Keys</h3>
+        <mdui-list class="manager-my-keys"></mdui-list>
+        <br><br>
+        <mdui-divider></mdui-divider>
+        <h3>Keys</h3>
+        <mdui-list class="manager-other-keys"></mdui-list>
       </div>
     </mdui-tab-panel>
     <mdui-tab-panel slot="panel" value="cryption">
@@ -53,7 +62,7 @@
     </mdui-tab-panel>
   </mdui-tabs>
   <mdui-dialog class="generate-key-dialog" close-on-esc close-on-overlay-click headline="Generate new PGP key">
-    <mdui-select class="generate-option-algo" placeholder="Choose an algo">
+    <mdui-select value="unchosen" class="generate-option-algo" placeholder="Choose an algo">
       <mdui-menu-item value="rsa-4096">RSA 4096</mdui-menu-item>
       <mdui-menu-item value="rsa-2048">RSA 2048</mdui-menu-item>
       <mdui-menu-item value="ecc-curve25519">ECC curve25519</mdui-menu-item>
@@ -71,7 +80,41 @@
       <mdui-button class="generate-button" onclick="generateKey()">Create key</mdui-button>
     </center>
   </mdui-dialog>
-  <script>mdui.setColorScheme("#39c5bb")</script>
+  <mdui-dialog class="generate-success-dialog" close-on-esc close-on-overlay-click
+    headline="Key Generated!"></mdui-dialogclass>
+    <mdui-list>
+      <mdui-list-item>
+        Algorithm
+        <span slot="description" class="generate-success-algorithm"></span>
+      </mdui-list-item>
+      <mdui-list-item class="generate-success-pubkey">
+        Public key
+        <span slot="description">Click to copy</span>
+      </mdui-list-item>
+      <mdui-list-item class="generate-success-privkey">
+        Private key
+        <span slot="description">Click to copy</span>
+      </mdui-list-item>
+    </mdui-list>
+    <center><mdui-button class="generate-success-close"
+        onclick="mdui.$('.generate-success-dialog')[0].open = false">OK</mdui-button></center>
+  </mdui-dialog>
+  <mdui-dialog class="key-info" close-on-esc close-on-overlay-click headline="Key Information">
+    <mdui-button full-width class="key-info-change-nick" icon="account_circle" end-icon="edit">Change Nickname</mdui-button>
+    <br>
+    <mdui-button full-width class="key-info-copy-pubkey" icon="share" end-icon="content_copy">Copy Public
+      Key</mdui-button>
+    <br>
+    <mdui-button full-width class="key-info-copy-privkey" icon="key" end-icon="content_copy">Copy Private Key</mdui-button>
+    <br>  
+    <mdui-button full-width class="key-info-copy-revoke-cert" icon="do_not_disturb_on" end-icon="content_copy">Copy Revocation Certificate</mdui-button>
+    <br>                                                      <!--@TODO: Extra notice-->
+    <mdui-button full-width class="key-info-delete" icon="delete_forever">Delete</mdui-button>
+    <br><mdui-divider></mdui-divider><br>
+    <mdui-button full-width class="key-info-delete" icon="close" onclick="document.querySelector('body > mdui-dialog.key-info').open=false">Close</mdui-button>
+
+  </mdui-dialog>
+  <script>mdui.setColorScheme("#39c5bb");</script>
   <script src="/js/index.js"></script>
 </body>
 
