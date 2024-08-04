@@ -5,9 +5,8 @@ window.mobileCheck = function () {
 };
 
 function openGenerateDialog() {
-    ['generate-option-username', 'generate-option-email', 'generate-option-passphrase', 'generate-option-confirm-passphrase'].forEach(element => {
-        mdui.$("." + element)[0].value = ""
-
+    ['generate-option-username', 'generate-option-email', 'generate-option-passphrase', 'generate-option-confirm-passphrase'].forEach(cls => {
+        mdui.$("." + cls)[0].value = ""
     });
     mdui.$(".generate-errors")[0].innerText = "";
     mdui.$(".generate-option-algo")[0].value = "";
