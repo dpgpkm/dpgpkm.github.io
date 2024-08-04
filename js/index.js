@@ -13,19 +13,16 @@ const keys = easyconfig("keys", {
     'other-keys': []
 });
 function openGenerateDialog() {
-    ['generate-option-username', 'generate-option-email', 'generate-option-passphrase', 'generate-option-confirm-passphrase'].forEach(element => {
-        mdui.$("." + element)[0].value = ""
-
+    ['generate-option-username', 'generate-option-email', 'generate-option-passphrase', 'generate-option-confirm-passphrase'].forEach(cls => {
+        mdui.$("." + cls)[0].value = ""
     });
     mdui.$(".generate-errors")[0].innerText = "";
+    mdui.$(".generate-option-algo")[0].value = "";
     mdui.$(".generate-key-dialog")[0].open = true;
-    mdui.$(".generate-option-algo")[0].value = 'unchosen';
-    document.querySelector('.generate-option-confirm-passphrase').style.display = 'none'
-    setTimeout(() => { mdui.$(".generate-option-algo")[0].value = 'unchosen'; }, 1)
 }
 
 function validateGenerateForm() {
-    if (mdui.$(".generate-option-algo")[0].value == "unchosen") {
+    if (mdui.$(".generate-option-algo")[0].value == "") {
         return "You must choose an algorithm."
     };
     if (mdui.$(".generate-option-email")[0].value != "" && !mdui.$(".generate-option-email")[0].value.includes("@")) { // That's all we needed
