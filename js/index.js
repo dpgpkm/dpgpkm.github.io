@@ -10,12 +10,12 @@ function openGenerateDialog() {
 
     });
     mdui.$(".generate-errors")[0].innerText = "";
+    mdui.$(".generate-option-algo")[0].value = "";
     mdui.$(".generate-key-dialog")[0].open = true;
-    mdui.$(".generate-option-algo")[0].value = 'unchosen';
 }
 
 function validateGenerateForm() {
-    if (mdui.$(".generate-option-algo")[0].value == "unchosen") {
+    if (mdui.$(".generate-option-algo")[0].value == "") {
         return "You must choose an algorithm."
     };
     if (mdui.$(".generate-option-email")[0].value != "" && !mdui.$(".generate-option-email")[0].value.includes("@")) { // That's all we needed
