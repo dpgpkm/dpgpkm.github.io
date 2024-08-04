@@ -12,6 +12,7 @@ function openGenerateDialog() {
     mdui.$(".generate-errors")[0].innerText = "";
     mdui.$(".generate-key-dialog")[0].open = true;
     mdui.$(".generate-option-algo")[0].value = 'unchosen';
+    setTimeout(()=>{mdui.$(".generate-option-algo")[0].value = 'unchosen';}, 1)
 }
 
 function validateGenerateForm() {
