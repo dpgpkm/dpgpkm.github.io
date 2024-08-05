@@ -18,6 +18,7 @@ function openGenerateDialog() {
     });
     mdui.$(".generate-errors")[0].innerText = "";
     mdui.$(".generate-option-algo")[0].value = "";
+    mdui.$(".generate-option-confirm-passphrase")[0].style.display = "none";
     mdui.$(".generate-key-dialog")[0].open = true;
 }
 
