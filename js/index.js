@@ -26,7 +26,7 @@ function validateGenerateForm() {
     if (mdui.$(".generate-option-algo")[0].value == "") {
         return "You must choose an algorithm."
     };
-    if (mdui.$(".generate-option-email")[0].value != "" && !mdui.$(".generate-option-email")[0].value.includes("@")) { // That's all we needed
+    if (mdui.$(".generate-option-email")[0].value != "" && !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(mdui.$(".generate-option-email")[0].value)) { // That's all we needed
         return "Invaild E-Mail address."
     }
     if (mdui.$(".generate-option-passphrase")[0].value != ""
