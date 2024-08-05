@@ -247,7 +247,57 @@ function openKeyGeneratedModal(algo, pub, priv) {
 
     mdui.$(".generate-success-dialog")[0].open = true;
 }
+async function showKeyInfo(fingerprint) {
+    mdui.$(".key-info")[0].open = true;
+    // 得到原始key
+    async function getKeyFromFingerprint(allKeys, fingerprint) {
+        let selKey = null;
+        for (let key in allKeys) {
+            if (!allKeys[key].fingerprint) {
+                allKeys[key].fingerprint = await getPublicKeyFingerprint(allKeys[key].publicKey)
+            }
+            if (allKeys[key].fingerprint == fingerprint) {
+                selKey = allKeys[key];
+                break;
+            }
+        }
+        return selKey;
+    }
+    // 通过浅克隆实现缓存pgp指纹，让查询速度加快
+    let selKey = await getKeyFromFingerprint(keys['my-keys'], fingerprint) || await getKeyFromFingerprint(keys['other-keys'], fingerprint) || {};
 
+    console.log(selKey);
+
+    mdui.$(".key-info-change-nick")[0].onclick = () => {
+        // TODO：改名弹窗
+    }
+    mdui.$(".key-info-delete")[0].onclick = () => {
+        // TODO：删除功能
+    }
+    function registerButtonDo(keyinp, classid) {
+        if (selKey[keyinp]) {
+            mdui.$(classid)[0].onclick = async () => {
+                if (await copyText(selKey[keyinp])) {
+                    mdui.alert({
+                        headline: "Copied!",
+                        description: "Text copied."
+                    })
+                } else {
+                    mdui.alert({
+                        headline: "Copy failed.",
+                        description: "Failed to copy text. Please try to reload the page."
+                    })
+                }
+            }
+            mdui.$(classid)[0].style.display = "block";
+        } else mdui.$(classid)[0].style.display = "none";
+    }
+
+    registerButtonDo("privateKey",".key-info-copy-privkey");
+    registerButtonDo("revocationCertificate",".key-info-copy-revoke-cert");
+    registerButtonDo("publicKey",".key-info-copy-pubkey");
+
+}
 function generateKeySummaryEl(name, email, fingerprint) {
     console.log("Generating Key Summary Element", name, email, fingerprint);
     let root = document.createElement("mdui-list-item");
@@ -256,6 +306,9 @@ function generateKeySummaryEl(name, email, fingerprint) {
     description_line1.setAttribute("slot", "description");
     description_line1.innerHTML = email.replaceAll("<", "&lt;").replaceAll(">", "&gt;") + "<br />" + fingerprint.replaceAll("<", "&lt;").replaceAll(">", "&gt;")
     root.appendChild(description_line1)
+    root.onclick = (e) => {
+        showKeyInfo(fingerprint);
+    }
     return root
 };
 async function getPublicKeyFingerprint(publicKeyArmored) {
@@ -264,7 +317,7 @@ async function getPublicKeyFingerprint(publicKeyArmored) {
     return fingerprint;
 };
 async function pushMyKey(key) {
-    mdui.$(".manager-my-keys")[0].appendChild(generateKeySummaryEl(key.nick || "(No Name)", key.userInfos[0].email || "(No E-Mail)", (await getPublicKeyFingerprint(key.publicKey))) || "(No Fingerprint)")
+    mdui.$(".manager-my-keys")[0].appendChild(generateKeySummaryEl(key.nick || "(No Name)", key.userInfos[0].email || "(No E-Mail)", (key.fingerprint || await getPublicKeyFingerprint(key.publicKey))) || "(No Fingerprint)")
 }
 async function initMyKeys() {
     mdui.$(".manager-my-keys")[0].innerText = '';
@@ -299,7 +352,7 @@ async function initOtherKeys() {
         bar.appendChild(title);
         bar.appendChild(document.createElement("mdui-divider"));
         for (let k of sortedObj[i]) {
-            let fingerprint = await getPublicKeyFingerprint(k.publicKey);
+            let fingerprint = k.fingerprint || await getPublicKeyFingerprint(k.publicKey);
             let keyBlock = generateKeySummaryEl(k.nick || "(No Name)", k.userInfos[0].email || "(No E-Mail)", fingerprint || "(No Fingerprint)");
             bar.appendChild(keyBlock);
         }
